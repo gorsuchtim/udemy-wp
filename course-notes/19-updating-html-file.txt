@@ -1,3 +1,27 @@
+After content hashing and cleaning the dist folder the html file link and script will now
+not be referencing the correctly named files -
+And those hashed files have dynamic names so we need a way to make the html reference the actual new hashed named
+
+The plugin to handle this is HtmlWebpackPlugin
+`npm i html-webpack-plugin --save-dev`
+`const HtmlWebpackPlugin = require("html-webpack-plugin");
+and in the config plugins add new HtmlWebpackPlugin()
+
+When building webpack now the html file will be output in dist.  That version of index.html will dynamically be 
+referenced to the hashed names.  
+
+By default those names will be prefixed with dist/hashed name - but we don't need the reference to the folder anymore because they are all
+in the same dist/output folder
+
+This can be done by updating publicPath in config by leaving it as an empty string.
+
+******IF USING THIS THEN YOU NO LONGER NEED THE ACTUAL HTML FILE IN THE ROOT OR SRC FOLDER OF THE APPLICATION BECAUSE THE BROWSER WILL 
+USE THE HTML FILE IN THE DIST/OUTPUT FOLDER*****
+
+Next lesson will focus on how to customize generated html files
+
+Config file should now look like 
+`
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -53,3 +77,4 @@ module.exports = {
     new HtmlWebpackPlugin(),
   ],
 };
+`
