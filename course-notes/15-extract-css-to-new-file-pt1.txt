@@ -1,0 +1,74 @@
+Injecting the css into <style> tags in the html using the style-loader plugin is fine for development but not for production
+With css-loader and style-loader all of our styles are bundled into our javascript code into a single file we've named bundle.js in the config
+And styles are added to the DOM via JS at run time
+
+Here we can extract our css into a separate file that will be generated alongside the JS bundle:  we'll have two bundles instead of 1
+This will decrease the size of our JS
+And allows us to load several files in our own way making the experience better
+
+We need a new plugin - MiniCssExtractPlugin.  We set this up in plugins - it will extract our css to a separate file 
+and we can specify the name of the output file too
+
+Install with `npm i mini-css-extract-plugin --save-dev`
+
+Import as `const MiniCssExtractPlugin = require("mini-css-extract-plugin");`
+
+Create a new plugin
+
+Now we need to modify the rules set up for scss and css to use MiniCssExtractPlugin - we'll replace style-loader with
+`MiniCssExtractPlugin.loader`
+
+Using this we will now get a new file in the dist folder named as we set up in the config call to MiniCssExtractPlugin(). 
+
+We need to include the file in the HTML markup using the old school `<link rel="stylesheet" href="./dist/styles.css" />`
+
+
+Config file will look like:
+`
+const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "./dist"),
+    publicPath: "dist/",
+  },
+  mode: "none",
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg)$/,
+        type: "asset/resource",
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/env "],
+            plugins: ["@babel/plugin-proposal-class-properties"],
+          },
+        },
+      },
+    ],
+  },
+  plugins: [
+    new TerserPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "styles.css",
+    }),
+  ],
+};
+`
