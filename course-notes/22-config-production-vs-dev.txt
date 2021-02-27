@@ -1,0 +1,26 @@
+Using mode in just a single config file, we would have to change mode back and forth from production to development depending on what we're doing
+
+We should create 2 config files: one for production builds and one for development builds
+
+So create a `webpack.production.config.js` and `webpack.development.config.js` and to start paste current webpack.config.js
+content into both files
+
+Production
+Set mode to "production"
+Terser can be removed because in mode: "production" Terser is included by default
+Everything else is suitable for production
+
+Development
+Make sure mode: "development"
+Can remove contenthash in development because we don't need browser caching
+Can also remove Terser plugin because we don't need to minify during dev: it's an extra step & takes time
+We want to optimize the build process to improve the development experience for the developer
+We also don't need to extract our css to a separate file during development: that's mostly useful for production
+So we can remove MiniCssExtractPlugin from the plugins array and plug style-loader back into the .css and .scss rules
+
+Since we now have 2 config files instead of one we should make it possible to run them separately.
+We can do this with scripts in the package.json
+
+We will set up build as 
+"build": "webpack --config webpack.production.config.js",
+"dev": "webpack --config webpack.dev.config.js"
