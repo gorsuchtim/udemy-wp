@@ -7,11 +7,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/index.js",
   output: {
-    filename: "bundle.[contenthash].js",
+    filename: "js/bundle.[contenthash].js",
     path: path.resolve(__dirname, "./dist"),
     publicPath: "",
   },
-  mode: "none",
+  mode: "development",
   module: {
     rules: [
       {
@@ -51,12 +51,12 @@ module.exports = {
   plugins: [
     new TerserPlugin(),
     new MiniCssExtractPlugin({
-      filename: "styles.[contenthash].css",
+      filename: "css/styles.[contenthash].css",
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: "Hello World",
-      filename: "subfolder/custom_filename.html",
+      filename: "html/custom_filename.html",
       meta: {
         description: "Some kind of info for description",
       },

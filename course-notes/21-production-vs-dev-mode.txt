@@ -1,0 +1,19 @@
+In production we want our website to be as fast as possible and our bundles to be as small as possible
+During dev we want to see add'l info in our JS code like source maps and stuff we don't want in production
+
+Mode
+Remember in webpack config module.exports {} we have Mode
+Mode has options for development and production builds available since webpack 4.  Previous versions need more work done here
+
+We initially set to none so we wanted no built in optimizations
+There are 3 possible values for mode.  "none", "development", "production"
+
+Production mode allows a long list of plugins (like terser)
+Production also sets `process.env.NODE_ENV on the DefinePlugin value to production.  We can use that variable in our JS code
+to check if we are in production or development mode.
+
+` if (process.env.NODE_ENV === "production") // do stuff you want to do in production `
+` if (process.env.NODE_ENV === "development") // do stuff you want to do in development `
+
+In development mode it will be much easier to debug since we aren't using the minified version of the code
+Development mode uses sourcemaps by default 
