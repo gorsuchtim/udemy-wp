@@ -1,0 +1,10 @@
+Setting type in the test/type rules to source injects the contents of that file into a string and injects it into the bundle
+as a string without any modifications so it won't coerce it to base64
+
+That's all. Almost
+
+Imagine you're wanting to do this with .txt files.  You can set up a new rule obj, right, in the rules array in config like:
+{
+    test: /\.txt/,
+    type: "asset/source"
+}

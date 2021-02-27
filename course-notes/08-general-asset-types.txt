@@ -1,0 +1,20 @@
+Remember asset resource type generates a new file for the type of resource defined in test in the config rules
+Asset inline injects the asset into the JS bundle as a base64 string (great for small resources like svg icons)
+
+This is a combination of the two.  
+If you leave type as `type: "asset"` then webpack will decide based on +/- 8kb on each file
+
+To change that value you do so with "parser" as an extra option in that rule in the config.  In this ex if <3kb use "inline" if >3kb use "resource" type
+`
+rules: [
+      {
+        test: /\.(png|jpg)$/,
+        type: "asset/resource",
+        parser: {
+            dataUrlCondition: {
+                maxSize: 3 * 1024 // 3 kilobytes
+            }
+        }
+      },
+    ],
+`

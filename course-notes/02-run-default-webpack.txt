@@ -1,0 +1,19 @@
+Go back to html and remove the hello-world js file because we won't need that dependency - webpack will bundle it for us
+Leave index.js as our main js file
+
+Let the files communicate:
+Set up the hello world function to be exported using `export default helloWorld;` at the end of that file/module
+Go to index.js and import the hello world function `import helloWorld from "./hello-world.js";`
+Go to terminal and run `npx webpack`
+
+Here we've run webpack w/out any configuration at all and we can see index.js was built at ~58bytes and hello-world.js is 89bytes 
+and webpack compiled in 93ms
+
+Notice in your file structure that webpack has created a default output folder for us called dist and in it is an optimized main.js file
+
+Now run webpack again with an option to show more details using `npx webpack --stats detailed`
+This prints details near the top about the ENTRYPOINT.  This is the file webpack chooses as the starting point when building your application
+This file usually imports other files from the application - webpack's default assumption is that the file is located in the `./src` folder
+Since the name of the file isn't specified it will use index.js as the entrypoint as the default.  
+
+This can be changed easily in the webpack configuration files

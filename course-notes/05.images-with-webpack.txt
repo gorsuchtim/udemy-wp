@@ -1,0 +1,48 @@
+Webpack makes it possible to import images right into the JS code
+Test this by creating in src a file named add-image.js
+Create a function here to create an image.
+For the src attribute we can import our image in our file using `import Kiwi from "./kiwi.jpg"`
+
+File will look like thisimport Kiwi from "./kiwi.jpg";
+`
+const addImage = () => {
+  const img = document.createElement("img");
+  img.alt = "Kiwi";
+  img.width = 300;
+  img.src = Kiwi;
+
+  const body = document.querySelector("body");
+  body.appendChild(img);
+};
+`
+export default addImage;
+
+Now we can import  and use this function to index.js like this
+`
+import helloWorld from "./hello-world.js";
+import addImage from "./add-image";
+
+helloWorld();
+addImage();
+`
+
+BUT WEBPACK STILL DOESN'T KNOW HOW TO USE THIS IMAGE - we still need to teach it how to import image files like we did in add-image.js
+Go to the configuration file.  Create a new property in the module.export object:  module
+module: {
+    rules: [
+        {
+            test: /\.(png|jpg)$/
+            type: "asset/resource"
+        }
+    ]
+}
+Rules is another property that contains an array of specific rules and each rule is an obj itself with at least two properties 
+with specific formatting - those properties are TEST and TYPE. 
+Test is a regular expression to match certain types of file types to test against 
+Type can accept 1 of 4 values: asset resource, inline, source and asset.  Resource can be used here but remember
+if we left it blank webpack would default to a certain type based on the image size (by default) being less than or greater than 8kb
+
+So anytime we try to import a jpg or png file webpack will check to see if it has a rule for it
+If it doesn't find a suitable rule it will throw an error saying it doesn't know how to import that type of file
+
+NOTE how webpack has created a file in the `/dist` output folder for this image

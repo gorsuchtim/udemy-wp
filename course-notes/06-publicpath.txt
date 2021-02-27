@@ -1,0 +1,19 @@
+public path is a special config option that tells webpack which URL to use in order to load all the generated files in the browser.
+
+If you're using static files like images in your app you can tell the browser where those files should be taken from 
+using the public path config option
+
+Prior to webpack 5, in config, in the `output` object publicPath was a required property.  Default was an empty string so any image
+wouldn't be loaded automatically
+
+By default webpack 5 sets publicPath to auto. And auto is an absolute path.
+It can be set to a relative path in output using `publicPath: "dist/"` and then the src attribute url will be relative
+
+output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "./dist"),
+    publicPath: "dist/"
+},
+Make sure to include the trailing "/" when using publicPath
+This is handy if you're using other resources like a CDN to serve your files or a module configuration feature and need a relative public path
+

@@ -1,0 +1,15 @@
+These don't create new files - they make the imports directly into the JS bundle
+Used when creating <8kb files by default.  You can use larger files when doing this but it will make the size of your JS file bigger
+And that's no bueno
+
+If you go to the config and change the image test/type from "asset/resource" to "asset/inline" and rerun the build
+you'll see immediately that the size of the generated JS bundle became much bigger (2.5mb-ish) because it bundled the image inline, not as a resource
+It bundled the base64 string version of the image and injected it right into the JS bundle
+
+The img src will contain in the dom the actual base64 string now
+
+So here that doesn't make sense but good use cases for asset/inline...
+with resource it generates a separate file for each image resource it creates so the browser makes a new http request for each one
+If there are 20 images on the page = 20 extra requests
+If they are huge jpgs sure but 20 small svgs used as icons..... the cost of extra requests is much higher than cost of increased space in the JS
+

@@ -1,0 +1,23 @@
+Why do we use webpack?
+It's a bundler -> we want to combine (bundle) multiple files into a single output file for JS and/or CSS
+So we can better organize our javascript into components that import their dependencies
+
+All dependencies, internal and external, are bundled into a single file
+
+SETTING UP SIMPLE APPLICATION BUILD
+Create at the root of the application and then open index.html and setup empty shell via "!" (touch index.html && code index.html)
+Create src folder
+Create 2 js files in src: index.js and hello-world.js (touch index.js && touch hello-world.js)
+Reference the two js files in index.html (script:src to quickly build out the <script> tag w/ src attribute)
+Reference index.js before hello-world.js
+Setup hello-world js to run a function to console log (clg) "hello world"
+Call this function in index.js
+
+Because you have referenced index.js first it has no knowledge of hello-world.js - if you re-order them it works
+If we had 100 JS files/modules or libraries this would become super hard to maintain
+
+Webpack can manage those dependencies for us and bundle them into a single application code file to reference in our html
+
+INSTALL WEBPACK AND INTEGRATE VIA NPM   
+Create a package.json to manage our dependencies at terminal with `npm init -y`.  This creates an empty package.json
+Install 2 webpack packages `npm i webpack webpack-cli.  Use the `--save-dev` flag to install as development dependencies

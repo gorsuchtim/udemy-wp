@@ -1,0 +1,57 @@
+Configuration is typically stored in webpack.config.js
+Create and optn that file in the root folder of the application (touch webpack.config.js && code wepack.config.js)
+
+This file is basically a module.  
+Webpack expects this module to export the configuration object using `module.exports = {}`
+
+Our config options will be in this object using `key: value` pairs.  This will address basic ones
+
+First define the entrypoint using `entry: "./src/index.js` (can be changed here to whatever)
+
+Next define the output directory and the file that will be generated from the build process
+For example we could have the output file be `/dist/bundle.js` so we would enter this as:
+output: {
+    filename: "bundle.js",
+    path: "./dist"
+}
+As we saw in our default running of `npx webpack` if this folder/file isn't specified webpack will by default create `./dist/main.js`
+BE SURE TO SPECIFIY AN ABSOLUTE PATH IN THE OUTPUT OBJECT.  Using `path: "./dist"` will throw an error
+You must use an absolute path.  There is a nodejs package that can help us generate an absolute path and it is called "path"
+At the top of the file import it via `const path = require('path');`
+Note the use of "require" instead of "import" - Inside the config file you can't use ECMAScript modules still as of webpack 5
+Now that the path package is available we can just call it via `path.resolve()`
+The first arg we pass to resolve is the current folder.  The 2nd arg is the relative path to the folder we want (in this case "dist")
+The new obj will look like:
+output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "./dist")
+}
+
+
+Next we'll define mode.  For now we list this as `mode: "none"` but later in the course this will be explained 
+
+This is the minimal requirements for a configuration file
+
+The file should look like this:
+`
+const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "./dist"),
+  },
+  mode: "none",
+};
+`
+
+Remove the existing dist folder that was created on earlier tests using rm -rf dist
+
+IMPORTANT NOTE!  The application will include all of the bundled javascript into index.js 
+That output file will be named whatever it was named above.  In this case that is /dist/bundle.js
+The HTML needs to reference THAT bundled file!
+
+In order to run webpack more conveniently we can create a script in package.json in the "scripts" object
+We can make a new script called build to do what we were doing before with `npx webpack`
+Create a key:value pair as "build": "webpack" and now we can run webpack using `npm run build`
