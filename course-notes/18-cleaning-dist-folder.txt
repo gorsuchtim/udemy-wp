@@ -1,0 +1,35 @@
+When we content hash or update files we will get new build versions of the contenthash file versions.
+
+That gets cluttered and dangerous if we're using randomly created filenames.
+Webpack has a plugin called CleanWebpackPlugin
+
+Each time you run the build process this cleans the output path folder (in our case that is the dist folder)
+
+`npm i clean-webpack-plugin --save-dev`
+`const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+and in the plugins you can add this below your other plugins so it looks like:
+`
+plugins: [
+    new TerserPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "styles.[contenthash]css",
+    }),
+    new CleanWebpackPlugin(),
+  ],
+`
+All other files except the most recent files will be removed from the dist folder
+
+You can clean multiple folders with this plugin by adding options to the plugin
+cleanOnceBeforeBuild pattern removes old files before generating new files
+The default will look at all folders and all files in those folders inside of the specified output folder and remove them. (**/*)
+This is the default setup.  
+If you want to remove files outside of that dist/specified output folder, then add an absolute path to that folder like this 
+where "build" is the other folder to clean:
+`
+new CleanWebpackPlugin({
+    cleanOnceBeforeBuildPatterns: [
+        "**/*",
+        path.join(process.cwd(), "build/**/*"),
+    ],
+    }),
+`

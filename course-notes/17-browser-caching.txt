@@ -1,0 +1,30 @@
+Everytime the browser loads a site it downloads all the assets required by that site.  Each time the user reloads the page
+the browser downloads those files again and again
+This increases time to wait till site is ready
+
+With browser caching if files haven't changed between page reloads the browser can save those files so there is no need
+to re-download the files.
+
+A mechanism for updating the cache is required though in case an update is made to the site - we want the browser to always use the most recent 
+version of the site's required files if they've been updated
+
+Versioning is a great way to do this - if the name changes the browser will download the new version.
+We don't have to do this manually - webpack can auto-do it via the config file by appending a hash to the file name
+And it will generate the new file name ONLY if changes were made to that file (ie you changed your css but not your js it will 
+update the change for the browser for css and not js)
+
+We just add content hash in [contenthash] to output file name so for JS output looks like:
+output: {
+    filename: "bundle.[contenthash].js",
+    path: path.resolve(__dirname, "./dist"),
+    publicPath: "dist/",
+},
+
+For CSS if using miniextract it looks like:
+new MiniCssExtractPlugin({
+    filename: "styles.[contenthash]css",
+}),
+
+In the dist folder this will output bundle.349587se98g7dfigjs or whatever and bundle.js
+
+This creates the new file WITHOUT auto removing the older versions.  It doesn't clean the dist folder.  That's in the next notes
