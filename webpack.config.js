@@ -16,7 +16,16 @@ module.exports = {
     rules: [
       {
         test: /\.(png|jpg)$/,
-        type: "asset/resource",
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 3 * 1024,
+          },
+        },
+      },
+      {
+        test: /\.txt/,
+        type: "asset/source",
       },
       {
         test: /\.css$/,
@@ -32,7 +41,7 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/env "],
+            presets: ["@babel/env"],
             plugins: ["@babel/plugin-proposal-class-properties"],
           },
         },
@@ -42,14 +51,9 @@ module.exports = {
   plugins: [
     new TerserPlugin(),
     new MiniCssExtractPlugin({
-      filename: "styles.[contenthash]css",
+      filename: "styles.[contenthash].css",
     }),
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [
-        "**/*",
-        path.join(process.cwd(), "build/**/*"),
-      ],
-    }),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin(),
   ],
 };
