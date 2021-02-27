@@ -1,0 +1,21 @@
+Create in the `components/hello-world-button` folder a file called `hello-world-button.css`
+Use `import "./hello-world-button.css";` to import the css file to the JS file.
+
+Webpack doesn't know what to do - how to handle - css file imports yet.  We have to tell it how in config
+In the webpack.config file we can create a new rule object for test/type for css
+Here we will use the "use" property to define how we will use the webpack style loader and css-loader
+Our new rule obj will look like 
+{
+    test: /\.css$/,
+    use: ["style-loader", "css-loader"],
+},
+
+These loaders work right-to-left.  The order is important! 
+The css-loader reads the contents of any file that passes the .css test and converts it to the javascript representation of that css
+The style-loader takes the css and injects it into the html using style tags
+
+********Using style loader bundles your css into your js for a single resulting file called bundle.js
+In future notes we'll learn how to generate them as separate files
+
+Asset modules are out of the box but when using loaders we have to install them explicitly as npm packages to add as dependency to application
+So for this we need the two packages we use above `npm i style-loader css-loader --save-dev`

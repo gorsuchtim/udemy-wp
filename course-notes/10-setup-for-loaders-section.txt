@@ -1,0 +1,38 @@
+Asset modules allow you to import images fonts or plain text files
+Loaders allow you to import all other files you can't import using asset modules
+
+You can import css, scss, less, handlebars, xml, etc using webpack.
+Loaders are JS libraries that help you import all that stuff.
+
+Let's play with it
+Create a components folder and in that create a folder for a file hello-world-button
+Get rid of the original hello-world.js and get rid of the import and call to it in index.js
+
+Create and export class HelloWorldButton
+`
+class HelloWorldButton {
+  render() {
+    const body = document.querySelector("body");
+
+    const button = document.createElement("button");
+    button.innerHTML = "Hello World";
+    button.classList.add("hello-world-button");
+    button.onclick = function () {
+      const p = document.createElement("p");
+      p.innerText = "Hello World!";
+      p.classList.add("hello-world-text");
+      body.appendChild(p);
+    };
+
+    body.appendChild(button);
+  }
+}
+
+export default HelloWorldButton;
+
+`
+
+Feel free to remove the image function and call in index.js for now
+
+Import and instantiate the class in index.js ( to instantiate just set up `const helloWorldButton = new HelloWorldButton() )
+Then render the button to the dom using the render method created on the class above with `helloWorldButton.render()`

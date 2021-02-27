@@ -1,0 +1,30 @@
+Babel allows you to use the latest version of ECMAScript by transpiling it down to a version of javascript
+that is supported by specified browsers.
+
+Basically you can convert newer JS code to older JS code automagically.
+
+Create a new rule for babel 
+Like with the css and scss we will define our test (using .js) this time and our "use" will be "babel-loader"
+We also need to setup options for babel loader.
+The first option is presets.  The first preset to setup is @babel/env.  This compiles ecmascript 6, 7, 8, 9, 10 down to 5
+(the latest available JS transpiled down to the most recent standard defined in ecmascript specification)
+Then we setup plugins.
+We can find and add in babel plugins for the code we have written or plan to write to cover all bases of modern JS
+For the purposes of where this is now we will only setup one preset and one plugin
+`
+{
+    test: /\.js$/,
+    exclude: /node_modules/,
+    use: {
+        loader: "babel-loader",
+        options: {
+        presets: ["@babel/env "],
+        plugins: ["@babel/plugin-proposal-class-properties"],
+        },
+    },
+},
+`
+
+The npm packages for these must be installed using 
+`npm i @babel/core babel-loader @babel/preset-env @babel/plugin-proposal-class-properties --save-dev`
+

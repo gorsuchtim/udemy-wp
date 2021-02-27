@@ -1,0 +1,11 @@
+With plugins you minify results in the bundle, or define global constants, or output other files besides just bundle.js
+
+In the webpack.config file add a new array for plugins after the module {}
+
+
+Minify
+Terser is a plugin that will minify the code for you.  When we use any plugin we have to install it and create a const at the top of the config file
+`npm i terser-webpack-plugin --save-dev`
+`const TerserPlugin = require("terser-webpack-plugin");`
+
+Remember --save-dev defines it as a development dependency - --save defines as production dependency

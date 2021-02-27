@@ -1,0 +1,17 @@
+Change the hello-world-button file extension from .css to .scss
+Creating generic sass variables for fun  and use them in the scss code
+Update the import in hello-world-button.js to import .scss not .css
+
+Install the npm package dependencies for sass-loader and node-sass
+`npm i sass-loader node-sass --save-dev`
+Node-sass is a library that provides bindings to lib sass.  Lib sass is the C version of the sass preprocessor.
+Allows you to process sass to css at incredible speed
+
+Create a rule obj for handling scss files.  You can copy the rule for css and just add "sass-loader" to that "use" array
+{
+    test: /\.scss$/,
+    use: ["style-loader", "css-loader", "sass-loader"],
+},
+
+The order is important!  Read right to left this will convert our sass to css then take the css and convert it to the js representation
+Then style loader will create style tags in our html page and put css into them
