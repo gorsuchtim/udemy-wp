@@ -1,3 +1,5 @@
-import helloWorld from "./hello-world.js";
+import helloWorld from "./components/hello-world.js";
+import addImage from "./components/add-image";
 
 helloWorld();
+addImage();
