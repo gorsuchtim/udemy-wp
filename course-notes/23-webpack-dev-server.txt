@@ -1,0 +1,22 @@
+We want to be able to see our changes live in the browser as we update during development
+
+`npm i webpack-dev-server --save-dev`
+
+Now we must specify options for our dev server in our dev.config
+
+We can do this with the devServer object
+We must specify 3 options: contentBase, index, and port
+
+contentBase should bind to our dist/output folder:
+`contentBase:path.resolve(__dirname, "./dist"),`
+
+index should bind to the name of our index.html file index:
+`index: "index.html",`
+
+port should be set to the actual port of the live local server:
+`port: 9000`
+
+`writeToDisk: true`
+
+Now we update our npm script in package.json to use devserver
+`"dev": "webpack serve --config webpack.dev.config.js --hot"`

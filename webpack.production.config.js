@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/index.js",
   output: {
-    filename: "js/bundle.[contenthash].js",
+    filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "./dist"),
     publicPath: "",
   },
@@ -45,19 +45,21 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.hbs$/,
+        use: ["handlebars-loader"],
+      },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "css/styles.[contenthash].css",
+      filename: "styles.[contenthash].css",
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: "Hello World",
-      filename: "html/custom_filename.html",
-      meta: {
-        description: "Some kind of info for description",
-      },
+      title: "Hello world",
+      template: "src/index.hbs",
+      description: "some description",
     }),
   ],
 };

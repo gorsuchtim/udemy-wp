@@ -5,11 +5,16 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/index.js",
   output: {
-    filename: "js/bundle.js",
+    filename: "bundle.js",
     path: path.resolve(__dirname, "./dist"),
     publicPath: "",
   },
   mode: "development",
+  devServer: {
+    contentBase: path.resolve(__dirname, "./dist"),
+    index: "index.html",
+    port: 9000,
+  },
   module: {
     rules: [
       {
@@ -44,16 +49,18 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.hbs$/,
+        use: ["handlebars-loader"],
+      },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: "Hello World",
-      filename: "html/custom_filename.html",
-      meta: {
-        description: "Some kind of info for description",
-      },
+      title: "Hello world",
+      template: "src/index.hbs",
+      description: "some description",
     }),
   ],
 };
