@@ -1,5 +1,7 @@
 With plugins you minify results in the bundle, or define global constants, or output other files besides just bundle.js
 
+All plugins available at webpack.js.org/plugins/
+
 In the webpack.config file add a new array for plugins after the module {}
 
 

@@ -1,0 +1,16 @@
+In webpack config we can pass add'l options to our HtmlWebpackPlugin to pass custom things like <title> and name of generated file
+We can also output the custom file name file to a custom subfolder to keep the dist folder organized better 
+
+Some custom configurations might look like this:
+new HtmlWebpackPlugin({
+    title: "Hello World",
+    filename: "subfolder/custom_filename.html",
+    meta: {
+    description: "Some kind of info for description",
+    },
+}),
+
+All of the options you can customize are on the github page for the plugin at 
+https://github.com/jantimon/html-webpack-plugin
+
+All plugins available at webpack.js.org/plugins/
