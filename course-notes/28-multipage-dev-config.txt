@@ -1,0 +1,11 @@
+Setting up the dev.config.js for multiple html page application.
+We need to set up multiple entry points like we did in production.config
+We also need to update the output filename to make it dynamic.  
+Remember we did this in the production config by setting output filename to [name].js (we don't use contenthash in dev)
+We need to add the 2nd html plugin to the list of plugins like we did in production
+
+There will be nothing at the https://localhost:9000 URL because there's no root file.  We only have the html template files
+So if we go to /hello-world.html or /kiwi.html we will see our page/template
+
+We go to /our-page AND NOT TO /HTML-TEMPLATES/OUR-PAGE because we are going to a file in the output dist folder not in our 
+local build folder
