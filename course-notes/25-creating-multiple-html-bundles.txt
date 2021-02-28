@@ -1,0 +1,47 @@
+Note in production html is automatically minified.  You can turn this off as an option
+passed to the HtmlWebpackPlugin configuration by setting minify: false
+
+If you turn it off and run build then look at index.html you'll see that
+in that one file it references both css and both js files in the bundle
+
+But a multi page app would have an html file for each page and that file wouldn't need to reference all of the other css/js files
+
+In production config we can update this by creating a new instance of new HtmlWebpackPlugin(){}
+and creating a filename property for each one we use
+So we would want to create an html folder in our src folder and set up our template html files for hello-world and kiwi in there 
+(The tutorial uses handlebars)
+We can add a template key to the html plugin object and set its value to the src/html/xxxx file for each
+
+Now we need to know which js bundles to include in each instance of the plugin.
+The plugin has an option called "chunks" we we can specifiy which bundles to include where
+Chunks is an array so we can specifiy multiple chunks.  Here we only need one each
+The chunk names are the entry point name in the entry object
+
+And our new config for the html plugin looks like:
+`
+new HtmlWebpackPlugin({
+    chunks: ["hello-world"],
+    filename: "hello-world.html",
+    meta: {
+    description: "Hello",
+    },
+    minify: false,
+    template: "src/html-templates/hello-world.html",
+    title: "Hello world",
+}),
+new HtmlWebpackPlugin({
+    chunks: ["kiwi"],
+    filename: "kiwi.html",
+    meta: {
+    description: "Green and fuzzy",
+    },
+    minify: false,
+    template: "src/html-templates/kiwi.html",
+    title: "Kiwi",
+}),
+`
+
+Now we will spit out an html file for which ever files from src/html are referenced in the HtmlWebpackPlugin objects in config
+
+Creates a bit of a problem with huge apps though huh?  Maybe we can have a script to create a plugin instance for each file in that
+src/html template folder
