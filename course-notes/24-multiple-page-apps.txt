@@ -5,3 +5,55 @@ We'll learn how to split the JS code into multiple bundles and create multiple H
 
 Imagine our site consists of 2 pages.
 
+And we need to load in kiwi.js for that page in the src folder alongside of index.js
+
+So create kiwi.js alongside index.js and import and instantiate the heading and kiwi image components in kiwi.js like this:
+
+`import Heading from "./components/heading/heading";
+import KiwiImage from "./components/kiwi-image/kiwi-image";
+import Kiwi from "./components/kiwi-image/kiwi-image";
+
+const heading = new Heading();
+heading.render();
+
+const kiwi = new KiwiImage();
+kiwi.render();
+`
+Now let's change our index.js file to hello-world.js .  Now we have 2 js files that represent two different entry points
+that should be included in 2 different html pages.  
+
+We can tell webpack to create two separate bundles out of those two files.  In production config we change how entrypoint is defined by putting
+in two entrypoints
+Currently entrypoint is set up as a string like: entry: "./src/index.js"
+We can update this to a js object w/ 2 properties.  Each prop points to one of the pages we'll have
+
+`
+entry: {
+    "hello-world": "./src/hello-world.js",
+    "kiwi": "./src/kiwi.js"
+}
+`
+
+Since we have two entry points instead of one we should make sure they're named differently
+Currently in the output obj we have filename: "bundle.[contenthash].js"
+We can keep path the same but as is both would be named bundle.js.  They'd both have a hash but it would be nicer
+for organization if we could name them different.  
+
+We can do this dynamically (like we did [contenthash]) with [name].  So by using filename: "[name].[contenthash].js"
+we would dynamically have the name set by the keys we set in entry above.  New output obj looks like 
+output: {
+    filename: "[name].[contenthash].js",
+    path: path.resolve(__dirname, "./dist"),
+    publicPath: "",
+},
+
+You can also use [id] in place of name.  That will make the name be the webpack chunk id.  That's not a "readable" name.  
+
+We can do the same trick for the css files too in the same production config file, in the MiniCss plug in config.
+Just update the filename key value the same way
+new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+}),
+[name] will take the name key from the entry object in the file!
+
+Note that this totally breaks the dev environment/configuration for now but that gets addressed soon
