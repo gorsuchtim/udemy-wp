@@ -42,6 +42,7 @@ new HtmlWebpackPlugin({
 `
 
 Now we will spit out an html file for which ever files from src/html are referenced in the HtmlWebpackPlugin objects in config
+and those files will only reference the css and js associated to them via the webpack chunk assigned in the entry name
 
 Creates a bit of a problem with huge apps though huh?  Maybe we can have a script to create a plugin instance for each file in that
 src/html template folder

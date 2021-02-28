@@ -1,0 +1,21 @@
+We may have times we want to import dependencies into bundled files that are output
+like our hello-world and kiwi.js files in src.  But we dont want large dependencies being built 
+into our production builds and increasing their file sizes
+For example maybe we want to import lodash or another library into a file.  If we have that bundled in our output files
+that could make a ~10 line js file 70kb which is way too big
+
+So we can extract those dependencides.  Webpack has a built in feature to extract common dependencies into their own files
+We'll update this in production config as it's own new property called optimization.  
+Optimization is an object with various values
+Specifiy splitChunks as an option object with an option called chunks inside of that.
+
+`
+optimization: {
+    splitChunks: {
+        chunks: "all"
+    }
+}
+This specifies which chunks will be specified for optimization
+This will split the dependencies out of our bundled output files and into their OWN output files
+These bundles are cached separately so our users won't need to download it when we update our code
+And this happens automagically into every html page that relies on a dependency
