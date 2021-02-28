@@ -11,9 +11,16 @@ module.exports = {
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "./dist"),
-    publicPath: "",
+    publicPath: "/static/",
   },
   mode: "production",
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      minSize: 10000,
+      automaticNameDelimiter: "_",
+    },
+  },
   module: {
     rules: [
       {
@@ -48,13 +55,11 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.hbs$/,
+        use: ["handlebars-loader"],
+      },
     ],
-  },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-      minSize: 3000, // 3kb
-    },
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -62,24 +67,18 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      chunks: ["hello-world"],
       filename: "hello-world.html",
-      meta: {
-        description: "Hello",
-      },
-      minify: false,
-      template: "src/html-templates/hello-world.html",
+      chunks: ["hello-world"],
       title: "Hello world",
+      description: "some description",
+      template: "src/page-template.hbs",
     }),
     new HtmlWebpackPlugin({
-      chunks: ["kiwi"],
       filename: "kiwi.html",
-      meta: {
-        description: "Green and fuzzy",
-      },
-      minify: false,
-      template: "src/html-templates/kiwi.html",
+      chunks: ["kiwi"],
       title: "Kiwi",
+      description: "Kiwi",
+      template: "src/page-template.hbs",
     }),
   ],
 };
