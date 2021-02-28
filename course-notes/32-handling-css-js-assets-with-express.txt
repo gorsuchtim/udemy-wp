@@ -1,0 +1,11 @@
+We need to send contents of file back to browser when we get an http request for this file.
+We need to create a separate route to handle requests for all types of static files so we need to create a new route for that.
+
+Our files are output into the dist folder
+When we get a request we'll get that file and send it back using the express.static method to serve those files
+We'll use `app.use("/static", express.static(path.resolve(__dirname, "../dist")));`
+
+Now all requests that start with /static will go directly to our dist folder.
+To hook this up right we'll want to make sure to include /static inside all of our static files inside index.html
+
+We don't have to do this manually - we can just change the publicPath option in our webpack production configuartion

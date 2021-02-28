@@ -4,6 +4,12 @@ const path = require("path");
 const fs = require("fs");
 
 /*
+Create a route to handle requests for all types of static files
+All requests that start with /static will go directly to our dist folder.
+*/
+app.use("/static", express.static(path.resolve(__dirname, "../dist")));
+
+/*
 Define a route that will send some content to the browser using .get() and send it two args
 The first argument defines the URL that we'll react to and the 2nd arg is a function 
 that function is invoked when the user goes to this URL
