@@ -1,0 +1,24 @@
+Let's import and install React to get that built into the project
+
+`npm i react --save-dev`
+
+if you run the build and look at the terminal output you'll see there's no additional js being bundled/created.  Just the
+hello-world and kiwi.js files.  When it was tested with lodash there was a dependency file created - but there isn't one for react
+
+Webpack by default extracts common dependencies only when they exceed 30kb before minification.
+Lodash is more than 30kb but react is much less
+
+We can change that number and still extract <30kb libs from our output files (which is probably good) by specifiying that number to, say, 30kb
+We add this in production config as an option in the optimization property.  See the notes in 26 re: optimization, splitChunks and chunks
+This part of the config would now look like:
+
+`
+ optimization: {
+    splitChunks: {
+      chunks: "all",
+      minSize: 3000 // 3kb
+    }
+},
+  `
+
+Now we can have an extracted file for react 

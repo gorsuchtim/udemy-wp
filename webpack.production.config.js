@@ -50,6 +50,12 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      minSize: 3000, // 3kb
+    },
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css",
