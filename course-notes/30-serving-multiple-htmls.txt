@@ -1,0 +1,7 @@
+The server.js setup is a similar setup to what we have in the branch feature/UW-001_node-express-spa for the single page application
+
+But here we need to handle serving up multiple pages... hello-world.html and kiwi.html instead of just a single index.html
+So we need two routes instead of 1
+
+So if we want it to default to hello-world.html we need to update the app.get() call to not use the root "/" but "/hello-world/"
+And the argument for const pathToHtmlFile must be updated as well
