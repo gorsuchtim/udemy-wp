@@ -1,0 +1,32 @@
+We will create a simple webserver using node and express that will show content in the browser when the user loads our app
+
+Install express in the terminal with `npm i express --save`   
+Create file in src called server.js.  Backend code will go here.
+Import express into this file with `const express = require('express');
+This contains core functionality of express framework
+
+Now create an instance of an express application that we will use later to define routes and to start a web server
+`const app = express();`
+
+Define a route that will send some content to the browser using .get() and send it two args
+The first argument defines the URL that we'll react to and the 2nd arg is a function 
+that function is invoked when the user goes to this URL
+`
+app.get("/", function(req, res) {
+  // we are going to send some dynamic content back to the browser
+  res.send("Just a big of placeholder text here");
+});
+`
+Now we need to start a webserver and tell it to listen on a specific port so that the application
+can start listening and reacting to incoming connections
+
+A common pattern for node js applications is to use 3000 for the port
+The 2nd arg is a function invoked right after the app starts
+`
+app.listen(3000, function() {
+    console.log("Application is running on https://localhost:3000/");
+});
+`
+
+Now we can add a script to the package.json file to conveniently run our server as `"start": "node src/server.js"`
+This starts our server up on localhost 3000
