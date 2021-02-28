@@ -45,10 +45,6 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.hbs$/,
-        use: ["handlebars-loader"],
-      },
     ],
   },
   plugins: [
@@ -58,8 +54,9 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: "Hello world",
-      template: "src/index.hbs",
-      description: "some description",
+      meta: {
+        description: "Some description",
+      },
     }),
   ],
 };

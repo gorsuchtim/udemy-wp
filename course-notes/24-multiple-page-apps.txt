@@ -1,0 +1,7 @@
+What we've done so far is great for single page applications pushing out a single html file and bundled js
+Some projects need more than 1 html page especially if they're rendered on the server side defined by navigating URLs
+
+We'll learn how to split the JS code into multiple bundles and create multiple HTML files for different pages of our webiste
+
+Imagine our site consists of 2 pages.
+
