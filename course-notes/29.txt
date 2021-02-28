@@ -1,0 +1,11 @@
+Integrating webpack with node and express
+Creating a backend for our application
+Node, php, ruby, java.... anything could work but we will use node.js and express
+And cover single page and multi page applications
+
+To do this - the repo will split here into a branch for node-express-spa (single-page-application)
+and a branch for node-express-mpa (multi-page-application)
+
+Setup code for both can be found at https://github.com/vp-online-courses/webpack-tutorial
+
+The code for the the SPA will be on the `integrating-express-js-into-a-single-page-application` branch

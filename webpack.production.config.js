@@ -4,16 +4,20 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: {
-    "hello-world": "./src/hello-world.js",
-    kiwi: "./src/kiwi.js",
-  },
+  entry: "./src/index.js",
   output: {
-    filename: "[name].[contenthash].js",
+    filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "./dist"),
     publicPath: "",
   },
   mode: "production",
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      minSize: 10000,
+      automaticNameDelimiter: "_",
+    },
+  },
   module: {
     rules: [
       {
@@ -48,38 +52,21 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.hbs$/,
+        use: ["handlebars-loader"],
+      },
     ],
-  },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-      minSize: 3000, // 3kb
-    },
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
+      filename: "styles.[contenthash].css",
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      chunks: ["hello-world"],
-      filename: "hello-world.html",
-      meta: {
-        description: "Hello",
-      },
-      minify: false,
-      template: "src/html-templates/hello-world.html",
       title: "Hello world",
-    }),
-    new HtmlWebpackPlugin({
-      chunks: ["kiwi"],
-      filename: "kiwi.html",
-      meta: {
-        description: "Green and fuzzy",
-      },
-      minify: false,
-      template: "src/html-templates/kiwi.html",
-      title: "Kiwi",
+      description: "Hello world",
+      template: "src/page-template.hbs",
     }),
   ],
 };

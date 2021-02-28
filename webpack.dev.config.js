@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/index.js",
   output: {
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "./dist"),
     publicPath: "",
   },
@@ -49,15 +49,18 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.hbs$/,
+        use: ["handlebars-loader"],
+      },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: "Hello world",
-      meta: {
-        description: "Some description",
-      },
+      description: "Hello world",
+      template: "src/page-template.hbs",
     }),
   ],
 };
