@@ -9,3 +9,4 @@ and a branch for node-express-mpa (multi-page-application)
 Setup code for both can be found at https://github.com/vp-online-courses/webpack-tutorial
 
 The code for the the SPA will be on the `integrating-express-js-into-a-single-page-application` branch
+Code for MPA is on the `integrating-express-js-into-a-multiple-page-application` branch
