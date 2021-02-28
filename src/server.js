@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const path = require("path");
+const fs = require("fs");
 
 /*
 Define a route that will send some content to the browser using .get() and send it two args
@@ -7,7 +9,12 @@ The first argument defines the URL that we'll react to and the 2nd arg is a func
 that function is invoked when the user goes to this URL
 */
 app.get("/", function (req, res) {
-  res.send("Some dummy content");
+  // use path to define absolute path to the file
+  const pathToHtmlFile = path.resolve(__dirname, "../dist/index.html");
+  // fs.readFileSync will asyncronously read content of file and return as a JS string
+  const contentFromHtmlFile = fs.readFileSync(pathToHtmlFile, "utf-8");
+  // send the content to the browser
+  res.send(contentFromHtmlFile);
 });
 
 /*

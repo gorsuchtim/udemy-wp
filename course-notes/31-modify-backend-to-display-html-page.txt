@@ -1,0 +1,24 @@
+In server.js we need to read the contents of the html file into a js variable and send that string to the browser
+
+we need to get an absolute path to our index.html using path.
+So we can import path at the top of the file using `const path = require("path") and then
+use path.resolve like we did in webpack config
+We will specify __dirname as first arg and 2nd argument is the relative path to the html file in the dist folder
+
+So inside of app.get() we will set up `const pathToHtmlFile = path.resolve(__dirname, "../dist/index.html");`
+
+This sets up the path to the file and then we need to get the content
+Now we need to read the contents of that file into a variable using fs.
+
+We need to import fs at the top of the file with `const fs = require("fs");`
+fs.readFileSync reads the file synchronously and returns a string.  
+Pass it the path and specify the encoding as utf-8 so contents of file are stored as unicode
+`const contentFromHtml = fs.readFileSync(pathToHtmlFile, "utf-8");
+
+Now we must send the content stored in contentFromHtml to the browser
+We use res.send(contentFromHtml);
+
+If we load this we get an empty page in the browser - we haven't yet told express how to load our assets - 
+We only said anytime there's an http request for the home URL send the index html page to the browser.
+
+That's right but there are links to the js and css bundles but express doesn't know what to do with that yet.
