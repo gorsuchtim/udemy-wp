@@ -1,0 +1,50 @@
+Module Federation - allows one application to dynamically load modules from another application at run time
+
+For example we can take the hello-world-button component and use it in the kiwi application.  Module federation is not available
+in an version of webpack < 5
+
+NOTE to get the latest version of webpack you can run `npm i --save-dev webpack@latest webpack-cli@latest`
+
+Go to the dev configuration file for the app that has the module/component(s) you want to expose
+to be avaialble to other applications.
+Set up the federation plugin.  You don't have to explicitly install the plugin
+Set it up at the top of the file with `const { ModuleFederationPlugin } =  require('webpack').container;`
+
+Then set it up in the plugins.  We can pass it specific properties. 
+First set a name for our to our application.  During the build process webpack generates a file that contains everything this application exports
+so other applications can use it.  
+
+The next property is filename.  A standard pattern is to name the file "remoteEntry.js"
+
+Next option is to list modules/components that will be exposed by this application.  Here we can specifiy the name of and path to the module/component we expose
+In this case it is the hello-world-button module
+
+We need to update also the publicPath key/value property in the exports output object to tell webpack
+the public path for where we want to run this.  We can update this to equal our port number value in the devServer object (9001 for hello-world)
+
+We need to add the federation plugin also to the production config file - don't forget to add the import as well
+and change the publicPath value to the localhost:9001.
+
+We also must update the server.js file.  The app.use method was using "/static" as the url to serve the assets from 
+but now we just need the "/"
+
+The plugin looks liks this in the code:
+`
+new ModuleFederationPlugin({
+    name: "HelloWorldApp",
+    filename: "remoteEntry.js",
+    exposes: {
+        "./HelloWorldButton": "./src/components/hello-world-button/hello-world-button.js"
+    }
+})
+`
+
+We must also update the dev and production confgs in the kiwi application.
+Update the name of the plugin to KiwiApp.  And we can remove exposes because we are not exposing any modules
+from Kiwi to be used
+Instead we will use a property called "remotes"  to specifiy the list of remote modules shared by other apps that we're going
+to consume in kiwi.  In this case we'll consume modules from hello world but not explicitly list the names of modules to consume
+We need to specify the name and URL where the hello world application is deployed
+So we will use the name we created in the hello world app for the federation plugin, HelloWorldApp and reference its URL
+
+This needs to be done in kiwi's dev and production config files
