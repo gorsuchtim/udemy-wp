@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/hello-world.js",
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "./dist"),
@@ -12,28 +12,11 @@ module.exports = {
   mode: "development",
   devServer: {
     contentBase: path.resolve(__dirname, "./dist"),
-    index: "index.html",
-    port: 9000,
+    index: "hello-world.html",
+    port: 9001,
   },
   module: {
     rules: [
-      {
-        test: /\.(png|jpg)$/,
-        type: "asset",
-        parser: {
-          dataUrlCondition: {
-            maxSize: 3 * 1024,
-          },
-        },
-      },
-      {
-        test: /\.txt/,
-        type: "asset/source",
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
       {
         test: /\.scss$/,
         use: ["style-loader", "css-loader", "sass-loader"],
@@ -58,6 +41,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
+      filename: "hello-world.html",
       title: "Hello world",
       description: "Hello world",
       template: "src/page-template.hbs",

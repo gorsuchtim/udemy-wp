@@ -1,15 +1,15 @@
-import Kiwi from "../../images/kiwi.jpg";
+import Kiwi from "./kiwi.jpg";
 import "./kiwi-image.scss";
 
 class KiwiImage {
   render() {
     const img = document.createElement("img");
     img.src = Kiwi;
-    img.alt = "Picture of a kiwi";
+    img.alt = "Kiwi";
     img.classList.add("kiwi-image");
 
-    const body = document.querySelector("body");
-    body.appendChild(img);
+    const bodyDomElement = document.querySelector("body");
+    bodyDomElement.appendChild(img);
   }
 }
 

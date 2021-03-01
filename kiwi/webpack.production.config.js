@@ -4,16 +4,20 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: {
-    "hello-world": "./src/hello-world.js",
-    kiwi: "./src/kiwi.js",
-  },
+  entry: "./src/kiwi.js",
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "./dist"),
-    publicPath: "",
+    publicPath: "/static/",
   },
   mode: "production",
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      minSize: 10000,
+      automaticNameDelimiter: "_",
+    },
+  },
   module: {
     rules: [
       {
@@ -30,10 +34,6 @@ module.exports = {
         type: "asset/source",
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
-      {
         test: /\.scss$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
@@ -44,17 +44,14 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/env"],
-            plugins: ["@babel/plugin-proposal-class-properties"],
           },
         },
       },
+      {
+        test: /\.hbs$/,
+        use: ["handlebars-loader"],
+      },
     ],
-  },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-      minSize: 3000, // 3kb
-    },
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -62,24 +59,10 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      chunks: ["hello-world"],
-      filename: "hello-world.html",
-      meta: {
-        description: "Hello",
-      },
-      minify: false,
-      template: "src/html-templates/hello-world.html",
-      title: "Hello world",
-    }),
-    new HtmlWebpackPlugin({
-      chunks: ["kiwi"],
       filename: "kiwi.html",
-      meta: {
-        description: "Green and fuzzy",
-      },
-      minify: false,
-      template: "src/html-templates/kiwi.html",
       title: "Kiwi",
+      description: "Kiwi",
+      template: "src/page-template.hbs",
     }),
   ],
 };

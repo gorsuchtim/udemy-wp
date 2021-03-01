@@ -1,0 +1,13 @@
+Split out hello world and kiwi into different folders at the root of our project folder
+We want to emulate having separately running applications - possibly with totally different dependencies & scripts/requirements
+in package.json and possibly with different configurations.
+We could, for example, have a multipage application running in one project and a SPA running in another
+
+Because there are two applications running we have them running on different development ports in server.json
+In webpack.dev.config the hello world app will run on port 9001 and kiwi will run on port 9002
+We need to update the devServer port option AND update the devServer index option as well to take the value of the applications html file
+(for example in kiwi we want kiwi.html)
+
+Note that in the development and production configs we can now modify the rules -
+because, for example, we don't need to handle images with hello world we can remove the image asset rule from hello world
+We also are no longer testing for or using css so we can remove the css rules from both configs for both applications
