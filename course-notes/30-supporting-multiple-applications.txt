@@ -15,3 +15,5 @@ Note that in the development and production configs we can now modify the rules 
 because, for example, we don't need to handle images with hello world we can remove the image asset rule from hello world
 We also are no longer testing for or using css so we can remove the css rules from both configs for both applications
 
+Install the dependencies in each folder and run start and note how the server starts running for that particular application on 
+it's own defined port (9001, 9002)
