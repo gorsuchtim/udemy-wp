@@ -1,0 +1,73 @@
+We need to import our exposed modules from our applications and render them in our dashboard and
+We must create an expressJS server in order to be able to run the dashboard application in the browser
+
+Importing modules into the main js and render them
+Need to use dynamic import here because remote bundles are loaded asyncronously
+We use 
+`
+import ("HelloWorldApp/HelloWorldPage").then(HelloWorldPageModule => {
+    // get the module default export class
+    const HelloWorldPage = HelloWorldPageModule.default;
+
+    // create and render new instance of this application
+    const helloWorldPage = new HelloWorldPage();
+    helloWorldPage.render();
+});
+`
+We do the same for the kiwi page.
+
+WE WANT TO RENDER THESE COMPONENTS DEPENDING ON WHAT URL IS IN THE BROWSER
+Therefore we need to get the URL before we render.  We can do that by grabbing the query string with
+`const url = window.location.pathname;`
+
+Then wrap both imports in a condition like so:
+`
+if (url === "/hello-world-page") {
+    import ("HelloWorldApp/HelloWorldPage").then(HelloWorldPageModule => {
+        // get the module default export class
+        const HelloWorldPage = HelloWorldPageModule.default;
+
+        // create and render new instance of this application
+        const helloWorldPage = new HelloWorldPage();
+        helloWorldPage.render();
+    });
+}
+`
+
+Finally we need to create an express js server to serve the dashboard application to the browser.
+We create server.js and import all that we need with
+`
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
+
+const app = express();
+`
+
+We must define how we'll serve static files with app.use().  We'll use
+`app.use("/", express.static(path.resolve(__dirname, "../dist")));`
+
+And then tell express to serve the same html file for any URL with app.get()
+`
+app.get("*", function(req, res) {
+    const pathToHtmlFile = path.resolve(__dirname, "../dist/dashboard.html")
+    const contentFromHtmlFile = fs.readFileSync(pathToHtmlFile, "utf-8");
+
+    res.send(contentFromHtmlFile);
+});
+`
+
+And then we tell express to listen for all connections on port 9000
+`
+app.listen(9000, function() {
+    console.log("Application is running on http://localhost:9000");
+});
+`
+
+Now we install all DEVELOPMENT packages we're using in this application
+webpack, webpack-cli, webpack-dev-server, mini-css-extract-plugin, html-webpack-plugin, 
+clean-webpack-plugin, babel-loader, @babel/core, @babel/preset-env --save-dev
+
+Then install express as a production dependency
+
+Add npm scripts to the dashboard package.json 

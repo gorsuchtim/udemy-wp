@@ -5,11 +5,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 
 module.exports = {
-  entry: "./src/hello-world.js",
+  entry: "./src/dashboard.js",
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "./dist"),
-    publicPath: "https://localhost:9001/",
+    publicPath: "http://localhost:9000/",
   },
   mode: "production",
   optimization: {
@@ -28,7 +28,6 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/env"],
-            plugins: ["@babel/plugin-proposal-class-properties"],
           },
         },
       },

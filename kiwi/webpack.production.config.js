@@ -9,7 +9,7 @@ module.exports = {
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "./dist"),
-    publicPath: "https://localhost:9002/",
+    publicPath: "http://localhost:9002/",
   },
   mode: "production",
   optimization: {
