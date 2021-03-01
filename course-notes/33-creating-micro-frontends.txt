@@ -1,0 +1,31 @@
+Micro front end is a type of architecture and can be useful when different parts of the parent application
+are developed by different individuals or teams
+
+Imagine a situation where there's a group of teams all working on the same site/application and each team is individually responsible 
+for their own page of that large application.
+Therefore, like our hello-world and kiwi setup there are different applications that must communicate.
+
+Imagine in this situation there's a top level nav bar on the site and it navigates to the different applications.
+
+We can prepare both apps so they can be used as micro front ends
+Hello world consists of a header and button.  We want to export everything on that page as a component
+so we can consume that component in the dashboard application
+
+Create a new component in the hello world components folder called hello-world-page.
+Create hello-world-page.js and move all of hello-world.js contents to this file
+
+Be sure to update the relative paths of the import statements
+We can wrap our 4 lines of our code in a render method of a class called HelloWorldPage and export that class
+
+Then we can expose that component in both of our configuration by adding this new component to the list of exposed modules
+
+Now in Kiwi.js we can remove our import of hello world button and create a kiwi page component just as we did in hello world
+by moving the contents of kiwi.js to components/kiwi-page/kiwi-page.js and updating our import references
+
+Then we wrap our kiwi-page code in a KiwiPage class and export it as we did before
+Now we need to expose THIS component in our dev and production configuration files.
+
+We can remove the remotes option in our config and add the exposes option to mirror what we did in hello world
+And we must be sure to update the publicPath option to the URL where it's running like in hello-world configs
+
+In server.js we can make a quick update in app.use to use "/" instead of "/static"
