@@ -1,0 +1,26 @@
+We can now go to kiwi.js and import the hello world button there
+We need to use dynamic import because remote bundles are loaded asyncronously
+
+We will import it not as we normall would like import HelloWorldButton from "./somePath";
+But by calling the name of the application we specified before in our the configuration of the app we are consuming with
+In this case the app we're consuming WITH is kiwi and in that config plugin in remotes object we named it HelloWorldApp
+Then we call the name of the component the application we're consuming FROM (hello world) exposes in its configuration file
+In this case in the exposes object it exposes "./HelloWorldButton"
+
+Then we need to get the default export of the module we need
+
+Now the hello world component can be used as if it was defined in THIS kiwi application
+So we use:
+`import ("HelloWorldApp/HelloWorldButton")
+    .then(HelloWorldButtonModule => {
+        const HelloWorldButton = HelloWorldButtonModule.default;
+
+        // create and instantiate HelloWorldButton
+        const helloWorldButton = new HelloWorldButton();
+        helloWorldButton.render();
+    });
+`
+Now we're able to consume a component from another application w/out adding a dependency to the package.json
+
+If we make changes to the root application then the updates will be applied across all applications that reference it.
+Module configuration loaded the component dynamically at load time and will always take the latest configuration of the component

@@ -5,3 +5,5 @@ const heading = new Heading();
 heading.render("kiwi");
 const kiwiImage = new KiwiImage();
 kiwiImage.render();
+
+import("HelloWorldApp/HelloWorldButton");
