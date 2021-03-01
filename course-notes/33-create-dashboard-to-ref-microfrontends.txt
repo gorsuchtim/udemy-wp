@@ -1,0 +1,36 @@
+We will create a parent/dashboard application that references the micro front end applications we set up for hello-world and kiwi
+
+At the project root create a new "dashboard" folder
+Setup a blank package.json with `npm init -y`
+Create a src folder with "dashboard.js" as the entry point js file
+
+Now we must do multiple things
+Create webpack dev and production config files for this application 
+And configure a module federation plugin in order to be able to consume configured modules defined in the other hello world and kiwi applications
+
+Wepack configs
+Copy from one of the applications and adjust accordingly
+Change the entry file name
+Change the port to 9000 as our root port to run both applications on
+In devServer add a new option called historyAPIFallback with an index value of dashboard.html like this:
+`
+historyApiFallback: {
+    index: "dashboard.html"
+}
+`
+This option tells the webpack devserver to always return whatever we specify in it no matter what URL we put in the nav bar
+
+We can remove the defined rules because we don't use them in this dashboard application 
+We can update our options as well.  IN HtmlWebpackPlugin we won't use the metadata option or the template option for hbs
+And we'll adjust this option's file name and title to dashboard
+
+Now we can update the module federation plugin
+Name will be "app"
+We will use the remotes option (not exposes) since we're consuming modules from other applications, not exposing them for use
+We will specify hello world and the kiwi applications by referencing their name as they're exposed in THOSE applications' config files
+remotes: {
+    HelloWorldApp: "HelloWorldApp@http://localhost:9001/remoteEntry.js",
+    KiwiApp: "KiwiApp@http://localhost:9002/remoteEntry.js"
+}
+
+We'll do this for both config files
