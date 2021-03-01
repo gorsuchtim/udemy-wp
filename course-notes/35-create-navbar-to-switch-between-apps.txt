@@ -1,0 +1,48 @@
+Create a navbar to show each of the pages to allow us to switch between applications
+
+In dashboard.js we can create 
+`
+const navigationItems = [
+    {
+        url: "/hello-world-page",
+        title: "Hello World Page"
+    },
+    {
+        url: "/kiwi-page",
+        title: "Kiwi Page"
+    }
+]
+`
+Now we can create an instance of a NavigationBar class and pass that render method the argument of navigationItems object above
+const navigationBar = new NavigationBar();
+navigationBar.render(navigationItems)
+
+So create the components folder and a folder for navigation bar 
+We'll have that render method spit out a <ul> with <li>'s for each object key in navigationItems that's passed to its render method
+
+`
+class NavigationBar {
+  render(navigationItems) {
+    const listItems = navigationItems.map((navigationItem) => {
+      return `
+            <li>
+                <a href="${navigationItem.url}">${navigationItem.title}</a>
+            </li>
+          `;
+    });
+
+    const ul = document.createElement("ul");
+
+    ul.innerHTML = listItems.join("");
+    ul.classList.add("navigation-bar");
+
+    document.querySelector("body").appendChild("ul");
+  }
+}
+
+export default NavigationBar;
+`
+We can create a navigation-bar scss file and import it into this js file 
+Then update our config to support scss with test/type
+
+Now we can switch between applications via a root/parent dashboard application
